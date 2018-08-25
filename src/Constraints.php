@@ -2,11 +2,16 @@
 
 namespace BaronVonPerko\Constrainable;
 
+
+use Illuminate\Database\Eloquent\Builder;
+
 trait Constraints
 {
     public static function bootConstraints()
     {
-        static::addGlobalScope(new ScopeConstrain);
+        static::addGlobalScope('constraints', function(Builder $builder) {
+             $builder->constrain(request('constraints'));
+        });
     }
 
     public function scopeConstrain($query, $constraints)
